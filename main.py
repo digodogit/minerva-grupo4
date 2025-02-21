@@ -12,7 +12,7 @@ def main():
  
     if st.button("Buscar Top 10", type="primary"):
         with st.spinner("Carregando dados da Billboard..."):
-            chart_data = billboard.billboard_10_ano_mes(date_str)
+            
             row_title = st.columns(5)
             with row_title[0]:
                 st.write("Rank")
@@ -25,14 +25,17 @@ def main():
             with row_title [4]:
                 st.write("Capa álbum")
             row_data = st.columns(5,vertical_alignment="center")
-            
+        if billboard.billboard_10_ano_mes_JSON(date_str):
+                chart_data = billboard.billboard_10_ano_mes_JSON(date_str)
+        else:
+                chart_data = billboard.billboard_10_ano_mes_API(date_str)
         if chart_data:
             st.success(f"Resultados para {date_str} da billboard")
-            for n,e in enumerate(chart_data):
-                data = billboard.procurar_musica(e['title'])
+            for pos, track in enumerate(chart_data):
+                data = billboard.procurar_musica(track['title'])
                 
                 with row_data[0].container(height=120):
-                        st.write(n+1)
+                        st.write(pos+1)
                 with row_data[1].container(height=120):
                         st.write(data['nome'])
                 with row_data[2].container(height=120):
