@@ -6,13 +6,13 @@ import datetime
 
 def main():
     st.title("Top da Billboard - Mês/Ano")
-    
+    #cria o input para o usuario escolher a data
     date_str = st.date_input("Escolha o Dia, Mês e Ano", datetime.date(2025, 1, 1))
     
  
     if st.button("Buscar Top 10", type="primary"):
         with st.spinner("Carregando dados da Billboard..."):
-            
+            #cria as colunas para o titulo e os dados
             row_title = st.columns(5)
             with row_title[0]:
                 st.write("Rank")
@@ -25,13 +25,18 @@ def main():
             with row_title [4]:
                 st.write("Capa álbum")
             row_data = st.columns(5,vertical_alignment="center")
+
+            #verifica se o json existe, caso contrario ir buscar os dados no site da billboard
         if billboard.billboard_10_ano_mes_JSON(date_str):
                 chart_data = billboard.billboard_10_ano_mes_JSON(date_str)
         else:
                 chart_data = billboard.billboard_10_ano_mes_API(date_str)
+
+            #verifica se os dados foram encontrados
         if chart_data:
             st.success(f"Resultados para {date_str} da billboard")
             for pos, track in enumerate(chart_data):
+                #procura os dados da musica no spotify
                 data = billboard.procurar_musica(track['title'])
                 
                 with row_data[0].container(height=120):
