@@ -4,8 +4,8 @@ import base64
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 def spotify_music(nome_musica):
-    client_id = '6a50038785c94550b3e87d3b88d2e6c0'
-    client_secret = '37abdc02f34741c68e21a0f8eb46d5fe'
+    client_id = ''
+    client_secret = ''
     client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     
