@@ -1,6 +1,6 @@
 import requests 
 from bs4 import BeautifulSoup
-import base64
+import json
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
@@ -25,8 +25,17 @@ def procurar_musica(nome_musica):
         }
         
     return musica
+def billboard_10_ano_mes_JSON(data_str):
+    with open('top_100_2016-2020.json', 'r') as file:
+        data = json.load(file)
+        mes = str(data_str).split('-')[1]
+        ano = str(data_str).split('-')[0]
+        if ano in data and mes in data[ano]:
+            return data[ano][mes]
+        else:
+            return None
 
-def billboard_10_ano_mes(data_str):
+def billboard_10_ano_mes_API(data_str):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
     }
